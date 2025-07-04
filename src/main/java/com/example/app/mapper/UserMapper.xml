@@ -13,8 +13,8 @@
 	
 	<!-- 회원가입 username 중복확인 -->
 	<!-- User selectUserByName(String username) -->
-	<select id="selectUsername" parameterType="String" resultType="String">
-		SELECT username FROM user
+	<select id="selectUserByname" parameterType="String" resultType="com.example.app.dto.User">
+		SELECT * FROM user
 		WHERE username = #{username}
 	</select>
 </mapper>

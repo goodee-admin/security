@@ -19,7 +19,7 @@ public class UserService {
 	
 	public void addUser(User user) {
 		// DB에 동일한 username이 존재하는지 체크 후 회원가입진행
-		if(userMapper.selectUsername(user.getUsername()) != null) {
+		if(userMapper.selectUserByname(user.getUsername()) != null) {
 			System.out.println("username이 존재합니다: "+user.getUsername());
 			return;
 		}

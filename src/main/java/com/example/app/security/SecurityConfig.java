@@ -44,6 +44,12 @@ public class SecurityConfig {
         
         http.formLogin((auth) -> 
         		auth.loginPage("/login")
+        			// 로그인 액션을 가로채서 스프링시큐리티에 위임
+        			// DB 로그인 인증방식은 스프링시큐리티에서 제공하는 UserDetails와 UserDetailsService Bean을 커스트마이징하여 사용하여 검증
+        			// UserDetailsService : Repository(Mapper)와 통신하여 스프링시큐리티가 사용하는 DTO를 반환하는 Service 역활을 하는 빈
+        			// UserDetails : User(DTO)를 스프링시큐리티 인증/인가에 사용가능한 DTO형태 
+        			// 스프링시큐리티가 인증/인가를 진행하기 위해서는 정해진 형태의 DTO(UserDetails)를 넘겨줘야한다.
+        			// 로그인 정보는 스프링시큐리티 관리에 있는 특별한 세션저장소에 저장되기때문에 스프링시큐리티API로 호출해야만 확인가능하다. -> MainController에서 코드 확인!
         			.loginProcessingUrl("/loginAction"));
         
         

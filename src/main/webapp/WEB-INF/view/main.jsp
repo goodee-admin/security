@@ -7,5 +7,10 @@
 </head>
 <body>
 	<h1>Main</h1>
+	<div>
+		username: ${loginUsername}
+		<br>
+		role: ${loginRole}
+	</div>
 </body>
 </html>
