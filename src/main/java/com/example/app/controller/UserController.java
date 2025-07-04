@@ -1,11 +1,11 @@
-package com.example.security.controller;
+package com.example.app.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.security.dto.User;
-import com.example.security.service.UserService;
+import com.example.app.dto.User;
+import com.example.app.service.UserService;
 
 @Controller
 public class UserController {

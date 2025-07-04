@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.security.mapper.UserMapper">
+<mapper namespace="com.example.app.mapper.UserMapper">
 	<!-- 회원가입 -->
 	<!-- int insertUser(User user) -->
-	<insert id="insertUser" parameterType="com.example.security.dto.User">
+	<insert id="insertUser" parameterType="com.example.app.dto.User">
 		INSERT INTO user(
 			username, password, role
 		) VALUES (
@@ -13,8 +13,8 @@
 	
 	<!-- 회원가입 username 중복확인 -->
 	<!-- User selectUserByName(String username) -->
-	<select id="selectUserByName" parameterType="String" resultType="com.example.security.dto.User">
-		SELECT * FROM user
+	<select id="selectUsername" parameterType="String" resultType="String">
+		SELECT username FROM user
 		WHERE username = #{username}
 	</select>
 </mapper>

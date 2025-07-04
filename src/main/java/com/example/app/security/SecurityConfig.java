@@ -1,12 +1,13 @@
-package com.example.security;
+package com.example.app.security;
 
-import com.example.security.controller.AdminController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.example.app.controller.AdminController;
 
 @Configuration
 @EnableWebSecurity
@@ -24,12 +25,17 @@ public class SecurityConfig {
     	// 2) 접근 경로에 대한 인가 작업
     	
     	// 모든 사용자에게 접근 가능한 경로 설정 - permintAll()
-    	// 로그인 사용자 테이블 role컬럼값이 ADMIN에만 허용 - hasRole("ADMIN")
+    	// 사용자 테이블 role컬럼값이 "ROLE_ADMIN"에만 허용 - hasRole("ADMIN")
+    	// 사용자 테이블 role컬럼값이 "ROLE_USER"에만 허용 - hasRole("USER")
     	// 그외 경로는 로그인 사용자에게만 허용 - anyRequest().authenticated()
         http.authorizeHttpRequests((auth) -> 
         		auth.requestMatchers("/","/WEB-INF/view/**").permitAll()
         			.requestMatchers("/addUser", "/addUserAction", "/login", "/loginAction").permitAll()
-                    .requestMatchers("/admin").hasRole("ADMIN")
+        			// /user/아래 경로는 ROLE_ADMIN, ROLE_USER 접근가능
+        			.requestMatchers("/user/**").hasRole("ADMIN")
+        			.requestMatchers("/user/**").hasRole("USER")
+        			// /admin/아래 경로는 ROLE_ADMIN만 접근가능 
+                    .requestMatchers("/admin/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
                 );
 

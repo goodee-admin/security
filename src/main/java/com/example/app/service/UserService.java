@@ -1,10 +1,10 @@
-package com.example.security.service;
+package com.example.app.service;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.security.dto.User;
-import com.example.security.mapper.UserMapper;
+import com.example.app.dto.User;
+import com.example.app.mapper.UserMapper;
 
 @Service
 public class UserService {
@@ -19,6 +19,10 @@ public class UserService {
 	
 	public void addUser(User user) {
 		// DB에 동일한 username이 존재하는지 체크 후 회원가입진행
+		if(userMapper.selectUsername(user.getUsername()) != null) {
+			System.out.println("username이 존재합니다: "+user.getUsername());
+			return;
+		}
 		
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setRole("ROLE_USER"); // role은 "ROLE_"접두사로 시작하여야 한다.
