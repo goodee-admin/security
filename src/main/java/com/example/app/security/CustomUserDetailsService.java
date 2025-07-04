@@ -1,4 +1,4 @@
-package com.example.app.service;
+package com.example.app.security;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.app.dto.User;
 import com.example.app.mapper.UserMapper;
+import com.example.app.service.CustomUserDetails;
 
 @Service // UserDetails빈은 등록시 Component나 Service를 사용하는데 Mapper를 호출하기 때문에 service를 많이 사용
 public class CustomUserDetailsService implements UserDetailsService {

@@ -9,8 +9,8 @@
 	<h1>LOGIN</h1>
 	<hr>
 	<form action="/loginAction" method="post">
-		<input type="text" name="username">
-		<input type="password" name="password">
+		username: <input type="text" name="username"><br>
+		password: <input type="password" name="password"><br>
 		<button>로그인</button>
 	</form>
 </body>

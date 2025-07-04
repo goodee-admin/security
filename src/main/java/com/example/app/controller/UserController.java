@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.app.dto.User;
-import com.example.app.service.UserService;
+import com.example.app.security.UserService;
 
 @Controller
 public class UserController {

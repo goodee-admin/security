@@ -52,8 +52,13 @@ public class SecurityConfig {
         			// 로그인 정보는 스프링시큐리티 관리에 있는 특별한 세션저장소에 저장되기때문에 스프링시큐리티API로 호출해야만 확인가능하다. -> MainController에서 코드 확인!
         			.loginProcessingUrl("/loginAction"));
         
+        // 4) 로그아웃
+     	http.logout((logout) -> 
+     			logout.logoutUrl("/logout") // 로그아웃 요청 url
+					  .invalidateHttpSession(true) // 세션정보 삭제
+     				  .logoutSuccessUrl("/login")); // 로그아웃 성공시 리다이렉션 url
         
-        // 4) CSRF 설정
+        // 5) CSRF 설정
         
         // CSRF(Cross-Site Request Forgery): 사용자가 의도하지 않은 요청(위조된 입력 폼)을 서버에 보내도록 유도하는 공격입니다.
         // 이런 공격을 방지하기 위해 입력폼에 인증된 CSRF토근값을 같이 보내어 토큰값을 확인 후 응답하는데 Spring Security는 이런 기능을 기본으로 제공한다.
@@ -62,7 +67,7 @@ public class SecurityConfig {
         return http.build();
     }
     
-    // 5) Spring Security는 로그인에 사용되는 비밀번호는 암호화된 문자열만 다룬다. 회원가입, 로그인등에 비밀번호 암호화와 관련된 기능을 
+    // 6) Spring Security는 로그인에 사용되는 비밀번호는 암호화된 문자열만 다룬다. 회원가입, 로그인등에 비밀번호 암호화와 관련된 기능을 
     // 	  담당하는 "비크립트패스워드인코드" Bean 등록(회원가입, 로그인구현시 비밀번호 암호화시 호출)
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
