@@ -27,7 +27,8 @@ public class SecurityConfig {
     	// 로그인 사용자 테이블 role컬럼값이 ADMIN에만 허용 - hasRole("ADMIN")
     	// 그외 경로는 로그인 사용자에게만 허용 - anyRequest().authenticated()
         http.authorizeHttpRequests((auth) -> 
-        		auth.requestMatchers("/", "/login", "/loginAction", "/WEB-INF/view/**").permitAll()
+        		auth.requestMatchers("/","/WEB-INF/view/**").permitAll()
+        			.requestMatchers("/addUser", "/addUserAction", "/login", "/loginAction").permitAll()
                     .requestMatchers("/admin").hasRole("ADMIN")
                     .anyRequest().authenticated()
                 );
