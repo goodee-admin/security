@@ -4,8 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.app.dto.User;
-import com.example.app.security.UserService;
+import com.example.app.domain.UserDomain;
+import com.example.app.service.UserService;
 
 @Controller
 public class UserController {
@@ -22,7 +22,7 @@ public class UserController {
 	}
 	// 회원가입 액션
 	@PostMapping("/addUserAction")
-	public String joinAction(User user) {
+	public String joinAction(UserDomain user) {
 		userService.addUser(user);
 		return "redirect:/login";
 	}

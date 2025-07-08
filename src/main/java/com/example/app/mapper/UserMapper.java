@@ -2,10 +2,10 @@ package com.example.app.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.example.app.dto.User;
+import com.example.app.domain.UserDomain;
 
 @Mapper
 public interface UserMapper {
-	int insertUser(User user);
-	User selectUserByname(String username);
+	int insertUser(UserDomain user);
+	UserDomain selectUserByname(String username);
 }
