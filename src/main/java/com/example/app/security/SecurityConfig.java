@@ -7,17 +7,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.example.app.controller.AdminController;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final AdminController adminController;
-
-    SecurityConfig(AdminController adminController) {
-        this.adminController = adminController;
-    }
     
     // 1) 인가를 담당한는 "시큐리티필터체인" @Bean 등록
     @Bean
