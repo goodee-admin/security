@@ -3,7 +3,7 @@
 <mapper namespace="com.example.app.mapper.UserMapper">
 	<!-- 회원가입 -->
 	<!-- int insertUser(User user) -->
-	<insert id="insertUser" parameterType="com.example.app.dto.User">
+	<insert id="insertUser" parameterType="com.example.app.domain.UserDomain">
 		INSERT INTO user(
 			username, password, role
 		) VALUES (
@@ -13,7 +13,7 @@
 	
 	<!-- 회원가입 username 중복확인 -->
 	<!-- User selectUserByName(String username) -->
-	<select id="selectUserByname" parameterType="String" resultType="com.example.app.dto.User">
+	<select id="selectUserByname" parameterType="String" resultType="com.example.app.domain.UserDomain">
 		SELECT * FROM user
 		WHERE username = #{username}
 	</select>

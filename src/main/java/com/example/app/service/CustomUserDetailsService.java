@@ -24,11 +24,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDomain user = userMapper.selectUserByname(username);
-		if(user != null) {
-			// SpringSecurity 인가/인증에 사용하는 dto를 생성
-			return new CustomUserDetails(user); // CustomUserDetails는 빈이 아니기 때문에 생성자를 호출하여 User를 인자로 전달
-		}
-		return null;
+		if(user == null) {
+			// DB에 username이 없으면 UsernameNotFoundException을 발생시켜야 한다.
+			throw new UsernameNotFoundException(username+"이 존재하지 않습니다.");
+		} 
+		return new CustomUserDetails(user); // CustomUserDetails는 빈이 아니기 때문에 생성자를 호출하여
+		
 	}
 	
 }

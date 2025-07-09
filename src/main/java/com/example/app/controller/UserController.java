@@ -33,9 +33,12 @@ public class UserController {
 	public String login() {
 		return "login";
 	}
+
 	// 로그인 액션
+	/*
 	@PostMapping("/loginAction")
 	public String loginAction() {
 		return "";
 	}
+	*/
 }

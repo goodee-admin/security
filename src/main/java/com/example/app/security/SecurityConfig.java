@@ -1,11 +1,21 @@
 package com.example.app.security;
 
+import java.io.IOException;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
@@ -50,7 +60,10 @@ public class SecurityConfig {
         // 3) 허용되지 않은 경로 접근시 로그인 페이지로 이동
         // ★★★★★ HttpSecurity객체를 랩핑하여 로그인 프로세스와 관련된 정보를 저장한는 FormLoginConfigurer객체값을 설정
     	httpSecurity.formLogin((formLoginConfigurer) -> 
-    			formLoginConfigurer.loginPage("/login").loginProcessingUrl("/loginAction"));
+    			formLoginConfigurer.loginPage("/login")
+    			.loginProcessingUrl("/loginAction")
+    			.successHandler(loginSuccessHandler())
+    			.failureHandler(loginFailureHandler()));
         			// 로그인 액션을 가로채서 스프링시큐리티에 위임
         			// DB 로그인 인증방식은 스프링시큐리티에서 제공하는 UserDetails와 UserDetailsService Bean을 커스트마이징하여 사용하여 검증
         			// UserDetailsService : Repository(Mapper)와 통신하여 스프링시큐리티가 사용하는 DTO를 반환하는 Service 역활을 하는 빈
@@ -64,11 +77,40 @@ public class SecurityConfig {
     	httpSecurity.logout((logoutConfigurer) -> 
     			logoutConfigurer.logoutUrl("/logout") // 로그아웃 요청 url
 							  .invalidateHttpSession(true) // 세션정보 삭제
-		     				  .logoutSuccessUrl("/login")); // 로그아웃 성공시 리다이렉션 url
-        
+		     				  .logoutSuccessUrl("/login")); // 로그아웃 성공시 리다이렉션 url		  	
         
         return httpSecurity.build();
     }
+    
+	/* 로그인 성공시 */
+	public AuthenticationSuccessHandler loginSuccessHandler() {
+		return new AuthenticationSuccessHandler() {
+			@Override
+			public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+					Authentication authentication) throws IOException, ServletException {
+
+				// 로그인 성공후 추가적으로 진행되어야 할 코드가 있다면 구현
+				System.out.println("로그인 성공");
+				response.sendRedirect("/");
+			}
+		};
+	}
+	
+	/* 로그인 실패시 */
+	public AuthenticationFailureHandler loginFailureHandler() {
+		return new AuthenticationFailureHandler() {
+
+			@Override
+			public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+					AuthenticationException exception) throws IOException, ServletException {
+				// 로그인 성공후 추가적으로 진행되어야 할 코드가 있다면 구현
+				System.out.println("로그인 실패");
+				response.sendRedirect("/login");
+			}
+		};
+	}
+    
+    
     
     // 5) Spring Security는 로그인에 사용되는 비밀번호는 암호화된 문자열만 다룬다. 회원가입, 로그인등에 비밀번호 암호화와 관련된 기능을 
     // 	  담당하는 "비크립트패스워드인코드" Bean 등록(회원가입, 로그인구현시 비밀번호 암호화시 호출)
